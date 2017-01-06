@@ -1,5 +1,7 @@
 package gui;
 
+import logic.ComputerMemory;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,11 +10,13 @@ import java.awt.*;
  */
 public class Board extends JPanel {
 
-    JButton[][] blocks;
+    private static Block[][] blocks;
+    private static ComputerMemory computerMemory;
 
     public Board() {
 
-        blocks = new JButton[8][8];
+        blocks = new Block[8][8];
+        computerMemory = new ComputerMemory();
 
         //Creates and adds buttons to board
         for (int i = 0; i < 8; i++) {
@@ -21,13 +25,17 @@ public class Board extends JPanel {
 
                 JButton button = new JButton();
                 button.setPreferredSize(new Dimension(100, 100));
-                blocks[i][j] = button;
-                add(button);
+                blocks[i][j] = new Block(1, button, null); //instead of "1" should be algorythm and also image needs
+                add(button);                                          //replacement
             }
         }
     }
 
-    public JButton[][] getBlocks() {
+    public static JButton[][] getBlocks() {
         return blocks;
+    }
+
+    public static ComputerMemory getComputerMemory() {
+        return computerMemory;
     }
 }
