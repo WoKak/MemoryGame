@@ -84,7 +84,20 @@ public class ComputerMemory {
         return null;
     }
 
-    public boolean isTwoKnown() {
+    public Information find(int index) {
+
+        for (int i = 0; i < knowledge.length; i++) {
+
+            if(i == index) {
+
+                return knowledge[i];
+            }
+        }
+
+        return null;
+    }
+
+    public int isTwoKnown() {
 
         this.myQucikSort(this.getKnowledge(), 0, getKnowledge().length - 1);
 
@@ -92,10 +105,10 @@ public class ComputerMemory {
 
             if( this.getKnowledge()[i].equals( this.getKnowledge()[i-1]) ) {
 
-                return true;
+                return i;
             }
         }
 
-        return false;
+        return -1;
     }
 }
