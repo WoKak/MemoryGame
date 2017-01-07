@@ -19,7 +19,7 @@ public class ComputerMemory {
         return knowledge;
     }
 
-    public static void myQucikSort(Information table[], int start, int length) {
+    public void myQucikSort(Information table[], int start, int length) {
 
         int i,j;
         Information v, tmp;

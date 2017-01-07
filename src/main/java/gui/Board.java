@@ -1,6 +1,7 @@
 package gui;
 
 import logic.ComputerMemory;
+import logic.Logic;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,14 +12,11 @@ import java.awt.*;
 public class Board extends JPanel {
 
     private static Block[][] blocks;
-    private static ComputerMemory computerMemory;
-    private static int[] rank;
+    private static Logic logic;
 
     public Board() {
 
         blocks = new Block[8][8];
-        computerMemory = new ComputerMemory();
-        rank = new int[] {0, 0}; // 0 - player; 1 - computer
 
         //Creates and adds buttons to board
         for (int i = 0; i < 8; i++) {
@@ -35,9 +33,5 @@ public class Board extends JPanel {
 
     public static JButton[][] getBlocks() {
         return blocks;
-    }
-
-    public static ComputerMemory getComputerMemory() {
-        return computerMemory;
     }
 }
