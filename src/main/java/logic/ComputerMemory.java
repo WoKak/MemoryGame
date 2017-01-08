@@ -1,5 +1,7 @@
 package logic;
 
+import gui.Block;
+
 /**
  * Created by Michał on 2017-01-06.
  */
@@ -104,6 +106,21 @@ public class ComputerMemory {
         for(int i = 1; i < this.getKnowledge().length; i++) {
 
             if( this.getKnowledge()[i].equals( this.getKnowledge()[i-1]) ) {
+
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public int isSecondKnown(Information info) {
+
+        this.myQucikSort(this.getKnowledge(), 0, getKnowledge().length -1);
+
+        for(int i = 0; i < this.getKnowledge().length; i++) {
+
+            if(this.getKnowledge()[i].equals( info )) {
 
                 return i;
             }
