@@ -34,4 +34,8 @@ public class Board extends JPanel {
     public static JButton[][] getBlocks() {
         return blocks;
     }
+
+    //need here method in order to get block with the information
+
+    //need here method in order to get block with the coordinates
 }

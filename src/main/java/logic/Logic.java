@@ -1,6 +1,9 @@
 package logic;
 
 import gui.Block;
+import gui.Board;
+
+import java.util.Random;
 
 /**
  * Created by Michał on 2017-01-07.
@@ -97,23 +100,28 @@ public class Logic {
 
     public void mark(Information first, Information second) {
 
-        /*
-            check if similar
+        if(first.getNumber() != second.getNumber()) {
 
-            IF NOT
-            - memorise
+            this.computerMemory.add(first);
+            this.computerMemory.add(second);
 
-            IF YES
-            - rank++
-            - setEnabled{false)
+        } else {
 
-         */
+            this.rank[1]++;
+            //disabling the blocks
+        }
 
     }
 
     public Information chooseOneImage() {
 
+        Random random = new Random();
 
-        return null;
+        int tmpRow = random.nextInt(8);
+        int tmpColumn = random.nextInt(8);
+
+        //methods from board
+
+        return new Information(tmpRow, tmpColumn, 0); //instead of 0 should be return from method from Board
     }
 }
