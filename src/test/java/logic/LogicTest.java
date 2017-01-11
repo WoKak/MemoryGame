@@ -1,5 +1,6 @@
 package logic;
 
+import gui.Board;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,6 +48,12 @@ public class LogicTest {
         logic.mark(trueOne, falseOne);
 
         assertTrue(logic.getComputerMemory().getKnowledge().length == 2);
+
+        /*
+        logic.mark(trueOne, trueTwo);
+
+        assertTrue(logic.getRank()[1] == 1);
+        */ //This part is commented because the board is not fully implemented
     }
 
     /*
