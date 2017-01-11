@@ -10,31 +10,33 @@ import java.util.Random;
  */
 public class Logic {
 
-    private ComputerMemory computerMemory;
-    private int[] rank;
-    private Board board;
+    private  ComputerMemory computerMemory;
+    private  int[] rank;
+    private static Logic INSTANCE = null;
 
 
-    public Logic() {
-        this.computerMemory = new ComputerMemory();
-        this.rank = new int[] {0, 0};
-        this.board = new Board();
+    private Logic() {
+        computerMemory = new ComputerMemory();
+        rank = new int[] {0, 0};
+    }
+
+    public static synchronized Logic getInstance() {
+
+        if (INSTANCE == null) {
+
+            INSTANCE = new Logic();
+
+        }
+
+        return INSTANCE;
     }
 
     public ComputerMemory getComputerMemory() {
         return computerMemory;
     }
 
-    public void setComputerMemory(ComputerMemory computerMemory) {
-        this.computerMemory = computerMemory;
-    }
-
     public int[] getRank() {
         return rank;
-    }
-
-    public void setRank(int[] rank) {
-        this.rank = rank;
     }
 
     public void playerMove(Block firstImage, Block secondImage) {
@@ -48,8 +50,8 @@ public class Logic {
 
         } else {
 
-            this.computerMemory.add(new Information(firstImage.getRow(), firstImage.getColumn(), firstImage.getValue()));
-            this.computerMemory.add(new Information(secondImage.getRow(), secondImage.getColumn(), secondImage.getValue()));
+            computerMemory.add(new Information(firstImage.getRow(), firstImage.getColumn(), firstImage.getValue()));
+            computerMemory.add(new Information(secondImage.getRow(), secondImage.getColumn(), secondImage.getValue()));
         }
 
         computerMove();
@@ -57,20 +59,20 @@ public class Logic {
 
     public void computerMove() {
 
-        int indexOfPair = this.computerMemory.isTwoKnown();
+        int indexOfPair = computerMemory.isTwoKnown();
 
         //checking whether position of two images is known
         if (indexOfPair != -1) {
 
             Information firstImageFromDecision = new Information(
-                    this.computerMemory.find(indexOfPair - 1).getRow(),
-                    this.computerMemory.find(indexOfPair - 1).getColumn(),
-                    this.computerMemory.find(indexOfPair - 1).getNumber());
+                    computerMemory.find(indexOfPair - 1).getRow(),
+                    computerMemory.find(indexOfPair - 1).getColumn(),
+                    computerMemory.find(indexOfPair - 1).getNumber());
 
             Information secondImageFromDecision = new Information(
-                    this.computerMemory.find(indexOfPair).getRow(),
-                    this.computerMemory.find(indexOfPair).getColumn(),
-                    this.computerMemory.find(indexOfPair).getNumber());
+                    computerMemory.find(indexOfPair).getRow(),
+                    computerMemory.find(indexOfPair).getColumn(),
+                    computerMemory.find(indexOfPair).getNumber());
 
             mark(firstImageFromDecision, secondImageFromDecision);
 
@@ -80,14 +82,14 @@ public class Logic {
             Information firstImageFromDecision = chooseOneImage();
             Information secondImageFromDecision;
 
-            int indexOfSecond = this.computerMemory.isSecondKnown(firstImageFromDecision);
+            int indexOfSecond = computerMemory.isSecondKnown(firstImageFromDecision);
 
             if(indexOfSecond != -1) {
 
                 secondImageFromDecision = new Information(
-                        this.computerMemory.find(indexOfSecond).getRow(),
-                        this.computerMemory.find(indexOfSecond).getColumn(),
-                        this.computerMemory.find(indexOfSecond).getNumber());
+                        computerMemory.find(indexOfSecond).getRow(),
+                        computerMemory.find(indexOfSecond).getColumn(),
+                        computerMemory.find(indexOfSecond).getNumber());
 
                 mark(firstImageFromDecision, secondImageFromDecision);
 
@@ -104,12 +106,12 @@ public class Logic {
 
         if(first.getNumber() != second.getNumber()) {
 
-            this.computerMemory.add(first);
-            this.computerMemory.add(second);
+            computerMemory.add(first);
+            computerMemory.add(second);
 
         } else {
 
-            this.rank[1]++;
+            rank[1]++;
             Board.getBlockWithInformation(first).getButton().setEnabled(false);
             Board.getBlockWithInformation(second).getButton().setEnabled(false);
         }
