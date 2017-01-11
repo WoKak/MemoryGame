@@ -19,24 +19,12 @@ public class Information implements Comparable<Information> {
         return row;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
     public int getColumn() {
         return column;
     }
 
-    public void setColumn(int column) {
-        this.column = column;
-    }
-
     public int getNumber() {
         return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
     }
 
     @Override

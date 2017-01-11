@@ -1,7 +1,5 @@
 package logic;
 
-import gui.Block;
-
 /**
  * Created by Michał on 2017-01-06.
  */
