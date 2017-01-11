@@ -1,10 +1,10 @@
 package gui;
 
-import logic.ComputerMemory;
 import logic.Logic;
 
 import javax.swing.*;
 import java.awt.*;
+import logic.Information;
 
 /**
  * Created by Michał on 2017-01-06.
@@ -35,7 +35,21 @@ public class Board extends JPanel {
         return blocks;
     }
 
-    //need here method in order to get block with the information
-
-    //need here method in order to get block with the coordinates
+    
+    
+   
+    
+    public Block getBlockWithInformation (Information info ) {
+        int x = info.getRow();
+        int y = info.getColumn();
+        
+        return blocks[x][y];
+    }
+    
+    
+    public Block getBlockWithCoordinates ( int x, int y ) {
+        
+        return blocks[x][y];    
+        
+            }
 }
