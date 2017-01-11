@@ -12,11 +12,13 @@ public class Logic {
 
     private ComputerMemory computerMemory;
     private int[] rank;
+    private Board board;
 
 
     public Logic() {
         this.computerMemory = new ComputerMemory();
         this.rank = new int[] {0, 0};
+        this.board = new Board();
     }
 
     public ComputerMemory getComputerMemory() {
@@ -108,7 +110,8 @@ public class Logic {
         } else {
 
             this.rank[1]++;
-            //disabling the blocks
+            Board.getBlockWithInformation(first).getButton().setEnabled(false);
+            Board.getBlockWithInformation(second).getButton().setEnabled(false);
         }
 
     }
@@ -120,8 +123,8 @@ public class Logic {
         int tmpRow = random.nextInt(8);
         int tmpColumn = random.nextInt(8);
 
-        //methods from board
+        int value = Board.getBlockWithCoordinates(tmpRow, tmpColumn).getValue();
 
-        return new Information(tmpRow, tmpColumn, 0); //instead of 0 should be return from method from Board
+        return new Information(tmpRow, tmpColumn, value);
     }
 }

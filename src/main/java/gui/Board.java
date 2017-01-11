@@ -39,7 +39,7 @@ public class Board extends JPanel {
     
    
     
-    public Block getBlockWithInformation (Information info ) {
+    public static Block getBlockWithInformation (Information info ) {
         int x = info.getRow();
         int y = info.getColumn();
         
@@ -47,7 +47,7 @@ public class Board extends JPanel {
     }
     
     
-    public Block getBlockWithCoordinates ( int x, int y ) {
+    public static Block getBlockWithCoordinates ( int x, int y ) {
         
         return blocks[x][y];    
         
