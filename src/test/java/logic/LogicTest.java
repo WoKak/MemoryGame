@@ -23,18 +23,17 @@ public class LogicTest {
 
     }
 
-    /* NOT IMPLEMENTED
+    /*
     @Test
     public void playerMove() throws Exception {
 
     }
 
-    NOT IMPLEMENTED
     @Test
     public void computerMove() throws Exception {
 
     }
-    */
+    */ //This part is commented and not implemented because the board is not fully implemented
 
     @Test
     public void mark() throws Exception {
@@ -48,18 +47,28 @@ public class LogicTest {
         logic.mark(trueOne, falseOne);
 
         assertTrue(logic.getComputerMemory().getKnowledge().length == 2);
+    }
 
-        /*
+    /*
+    @Test
+    public void mark1() throws Exception {
+
+
         logic.mark(trueOne, trueTwo);
 
         assertTrue(logic.getRank()[1] == 1);
-        */ //This part is commented because the board is not fully implemented
-    }
+
+    }*/ //This part is commented because the board is not fully implemented
+
 
     /*
     @Test
     public void chooseOneImage() throws Exception {
 
+        Logic logic = Logic.getInstance();
+        Information tmp = logic.chooseOneImage();
+
+        assertNotNull(tmp);
     }
-    */
+    */ //This part is commented because the board is not fully implemented
 }
