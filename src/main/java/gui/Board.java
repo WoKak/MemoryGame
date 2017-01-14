@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import logic.Information;
+import logic.Logic;
 
 /**
  * Created by Michał on 2017-01-06.
@@ -20,7 +21,7 @@ public class Board extends JPanel {
         blocks = new Block[8][8];
         firstChosenImage = null; // no image has been chosen
 
-        int[] whereToPutImages = giveImageNumber(); // creates an array; indexes are numbers of buttons on board
+        int[] whereToPutImages = ImageGiver.giveImageNumber(); // creates an array; indexes are numbers of buttons on board
         // and content are numbers of images to place
 
         //Creates and adds buttons to board
@@ -46,7 +47,7 @@ public class Board extends JPanel {
 
                 int imageIndex = 8 * i + j;
 
-                String srcFolder = "/home/pawel/Dokumenty/JAVA/LocalMemoryGame/src/main/java/gui/img/";
+                String srcFolder = "img/";
                 ImageIcon imageToPut = new ImageIcon(srcFolder + whereToPutImages[imageIndex] + ".jpg");
 
                 blocks[i][j] = new Block(whereToPutImages[imageIndex], button, imageToPut, i, j);
