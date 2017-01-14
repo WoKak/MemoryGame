@@ -1,6 +1,5 @@
 package gui;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +12,7 @@ import logic.Information;
 public class Board extends JPanel {
 
     private static Block[][] blocks;
-  //  private static Logic logic;
+    //  private static Logic logic;
 
     private Block firstChosenImage;
 
@@ -25,14 +24,10 @@ public class Board extends JPanel {
         int[] whereToPutImages = giveImageNumber(); // creates an array; indexes are numbers of buttons on board
         // and content are numbers of images to place
 
-        
-           
         //Creates and adds buttons to board
         for (int i = 0; i < 8; i++) {
 
             for (int j = 0; j < 8; j++) {
-
-               
 
                 JButton button = new JButton();
                 button.setActionCommand("" + i + j);
@@ -49,11 +44,10 @@ public class Board extends JPanel {
                     }
                 });
                 button.setPreferredSize(new Dimension(100, 100));
-                
-                
+
                 int imageIndex = 8 * i + j;
-                
-                String srcFolder="/home/pawel/Dokumenty/JAVA/LocalMemoryGame/src/main/java/gui/img/";
+
+                String srcFolder = "/home/pawel/Dokumenty/JAVA/LocalMemoryGame/src/main/java/gui/img/";
                 ImageIcon imageToPut = new ImageIcon(srcFolder + whereToPutImages[imageIndex] + ".jpg");
 
                 blocks[i][j] = new Block(whereToPutImages[imageIndex], button, imageToPut, i, j);
@@ -93,4 +87,3 @@ public class Board extends JPanel {
 
     }
 }
-
