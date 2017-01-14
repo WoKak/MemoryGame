@@ -39,6 +39,7 @@ public class ImageGiver {
                 // do nothing, go to new button
             }
         }
+         
 
         // mini test
         int[] tmp = new int[64];
