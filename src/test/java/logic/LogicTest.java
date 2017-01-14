@@ -95,19 +95,25 @@ public class LogicTest {
         assertTrue(logic.getComputerMemory().getKnowledge().length == 2);
     }
 
-    /*
+
     @Test
     public void mark1() throws Exception {
 
+        Logic.destroyLogic();
+
+        Logic logic = Logic.getInstance();
+
+        Information trueOne = new Information(1, 1, 1);
+        Information trueTwo = new Information(3,3,1);
 
         logic.mark(trueOne, trueTwo);
 
         assertTrue(logic.getRank()[1] == 1);
 
-    }*/ //This part is commented because the board is not fully implemented
+    }   //Fail because of the same reason as before
 
 
-    /*
+
     @Test
     public void chooseOneImage() throws Exception {
 
@@ -115,6 +121,6 @@ public class LogicTest {
         Information tmp = logic.chooseOneImage();
 
         assertNotNull(tmp);
-    }
-    */ //This part is commented because the board is not fully implemented
+
+    }   //Fail because of the same reason as before
 }

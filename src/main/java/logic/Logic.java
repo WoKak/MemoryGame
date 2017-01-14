@@ -14,12 +14,15 @@ public class Logic {
     private int[] rank;
     private static Logic INSTANCE = null;
 
-
     private Logic() {
         computerMemory = new ComputerMemory();
         rank = new int[] {0, 0};
     }
 
+    /**
+     * Method introduced because Logic is singleton.
+     * @return Logic instance
+     */
     public static synchronized Logic getInstance() {
 
         if (INSTANCE == null) {
@@ -31,6 +34,9 @@ public class Logic {
         return INSTANCE;
     }
 
+    /**
+     * Destructor of logic.
+     */
     public static synchronized void destroyLogic() {
 
         if(INSTANCE != null) {
@@ -42,20 +48,20 @@ public class Logic {
         }
     }
 
-    public ComputerMemory getComputerMemory() {
-        return computerMemory;
-    }
-
-    public int[] getRank() {
-        return rank;
-    }
-
     private void setComputerMemory(ComputerMemory computerMemory) {
         this.computerMemory = computerMemory;
     }
 
     private void setRank(int[] rank) {
         this.rank = rank;
+    }
+
+    public ComputerMemory getComputerMemory() {
+        return computerMemory;
+    }
+
+    public int[] getRank() {
+        return rank;
     }
 
     public void playerMove(Block firstImage, Block secondImage) {
