@@ -13,7 +13,7 @@ import logic.Information;
 public class Board extends JPanel {
 
     private static Block[][] blocks;
-    // private static Logic logic;
+  //  private static Logic logic;
 
     private Block firstChosenImage;
 
@@ -22,20 +22,19 @@ public class Board extends JPanel {
         blocks = new Block[8][8];
         firstChosenImage = null; // no image has been chosen
 
-        int[] whereToPutImages = ImageGiver.giveImageNumber(); // creates an array; indexes are numbers of buttons on board
+        int[] whereToPutImages = giveImageNumber(); // creates an array; indexes are numbers of buttons on board
         // and content are numbers of images to place
 
-        // for( int i =0; i<64; i++)
-        //   System.out.println(""+whereToPutImages[i]);
+        
+           
         //Creates and adds buttons to board
         for (int i = 0; i < 8; i++) {
 
             for (int j = 0; j < 8; j++) {
 
-                int imageIndex = 10 * i + j - i * 3;
-                ImageIcon imageToPut = new ImageIcon("img/" + whereToPutImages[imageIndex] + ".jpg");
+               
 
-                JButton button = new JButton("",imageToPut);
+                JButton button = new JButton();
                 button.setActionCommand("" + i + j);
                 button.addActionListener(new ActionListener() {
                     @Override
@@ -51,7 +50,11 @@ public class Board extends JPanel {
                 });
                 button.setPreferredSize(new Dimension(100, 100));
                 
-               // System.out.println("" + imageIndex);
+                
+                int imageIndex = 8 * i + j;
+                
+                String srcFolder="/home/pawel/Dokumenty/JAVA/LocalMemoryGame/src/main/java/gui/img/";
+                ImageIcon imageToPut = new ImageIcon(srcFolder + whereToPutImages[imageIndex] + ".jpg");
 
                 blocks[i][j] = new Block(whereToPutImages[imageIndex], button, imageToPut, i, j);
                 add(button);
@@ -90,3 +93,4 @@ public class Board extends JPanel {
 
     }
 }
+
