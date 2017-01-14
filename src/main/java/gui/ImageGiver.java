@@ -1,5 +1,6 @@
 package gui;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -15,29 +16,48 @@ public class ImageGiver {
             whereToPutImages[i] = 99;
         }
 
-        int[] numberOfImageCopies = new int[32];
-        for (int i = 0; i < 32; i++) {
-            numberOfImageCopies[i] = 0;
-        }
-
         int buttonIndex = 0;
+
+        ArrayList<Integer> numbersAvaibleToGet = new ArrayList<>(64);
+        for (int k = 0; k < 2; k++) {
+            for (int i = 0; i < 32; i++) {
+                numbersAvaibleToGet.add(i);
+            }
+        }
 
         Random generator = new Random();
 
         while (buttonIndex < 64) {
-            int randomNumber = generator.nextInt(32);
 
-            if (numberOfImageCopies[randomNumber] > 2) {
-            } else if (whereToPutImages[buttonIndex] == 99) {
-                whereToPutImages[buttonIndex] = randomNumber;
-                numberOfImageCopies[randomNumber]++;
-            } else {
+            int randomNumber = generator.nextInt(numbersAvaibleToGet.size());
+
+            if (whereToPutImages[buttonIndex] == 99) {
+                whereToPutImages[buttonIndex] = numbersAvaibleToGet.get(randomNumber);
+                numbersAvaibleToGet.remove(randomNumber);
                 buttonIndex++;
+            } else {
+                // do nothing, go to new button
             }
         }
-        // returns 64 int's array where indexes are button's numbers 
-        // and content are numbers of images ( from 0 to 31 ) to put in these buttons
 
+        // mini test
+        int[] tmp = new int[64];
+        for (int i = 0; i < 64; i++) {
+            tmp[i] = 0;
+        }
+        for (int i = 0; i < 64; i++) {
+            tmp[whereToPutImages[i]]++;
+        }
+
+        for (int i = 0; i < 64; i++) {
+            if (tmp[i] > 2) {
+                System.out.println("BŁĄD" + i);
+            }
+        }
+        // end of mini test
+
+        // returns 64 int's array where indexes are button's numbers 
+        // and content are numbers of images ( from 0 to 31 ) to put in these buttons 
         return whereToPutImages;
     }
 
