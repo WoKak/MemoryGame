@@ -12,7 +12,6 @@ import logic.Information;
 public class Board extends JPanel {
 
     private static Block[][] blocks;
-    //  private static Logic logic;
 
     private Block firstChosenImage;
 
@@ -51,6 +50,8 @@ public class Board extends JPanel {
                 ImageIcon imageToPut = new ImageIcon(srcFolder + whereToPutImages[imageIndex] + ".jpg");
 
                 blocks[i][j] = new Block(whereToPutImages[imageIndex], button, imageToPut, i, j);
+                // !!! if you want to see where all pictures are uncomment this line:
+                // button.setIcon(imageToPut);
                 add(button);
             }
         }
@@ -58,14 +59,23 @@ public class Board extends JPanel {
 
     public void onClicked(Block current) {
 
+        current.getButton().setIcon(current.getImage());
+
         if (this.firstChosenImage == null) {
             this.firstChosenImage = current;
             System.out.println("" + current.getValue());
         } else {
             System.out.println("" + current.getValue());
             System.out.println("PARA CZY NIE PARA?");
+            try {
+                Thread.sleep(2000); // sleep so user can see what image is on button that they clicked ( doesn't work! )
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
             Logic.getInstance().playerMove(firstChosenImage, current);
+            this.firstChosenImage.getButton().setIcon(null);
             this.firstChosenImage = null;
+            current.getButton().setIcon(null);
         }
 
     }
