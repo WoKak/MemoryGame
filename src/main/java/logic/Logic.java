@@ -10,8 +10,8 @@ import java.util.Random;
  */
 public class Logic {
 
-    private  ComputerMemory computerMemory;
-    private  int[] rank;
+    private ComputerMemory computerMemory;
+    private int[] rank;
     private static Logic INSTANCE = null;
 
 
@@ -31,12 +31,31 @@ public class Logic {
         return INSTANCE;
     }
 
+    public static synchronized void destroyLogic() {
+
+        if(INSTANCE != null) {
+
+            INSTANCE.setComputerMemory(null);
+            INSTANCE.setRank(null);
+
+            INSTANCE = null;
+        }
+    }
+
     public ComputerMemory getComputerMemory() {
         return computerMemory;
     }
 
     public int[] getRank() {
         return rank;
+    }
+
+    private void setComputerMemory(ComputerMemory computerMemory) {
+        this.computerMemory = computerMemory;
+    }
+
+    private void setRank(int[] rank) {
+        this.rank = rank;
     }
 
     public void playerMove(Block firstImage, Block secondImage) {
@@ -57,6 +76,9 @@ public class Logic {
         computerMove();
     }
 
+    /**
+     * Method which is used by AI to make move - all doubts are explained in the body.
+     */
     public void computerMove() {
 
         int indexOfPair = computerMemory.isTwoKnown();
@@ -102,6 +124,13 @@ public class Logic {
         }
     }
 
+    /**
+     * Method used as a part of AI for checking and deciding whether params are similar or not.
+     * In first case rank is increased and proper blocks are enabled.
+     * If not AI adds both information to the memory.
+     * @param first Information
+     * @param second Information
+     */
     public void mark(Information first, Information second) {
 
         if(first.getNumber() != second.getNumber()) {
@@ -118,6 +147,10 @@ public class Logic {
 
     }
 
+    /**
+     * Method used for choosing one completely random block from board
+     * @return Information for the AI
+     */
     public Information chooseOneImage() {
 
         Random random = new Random();
