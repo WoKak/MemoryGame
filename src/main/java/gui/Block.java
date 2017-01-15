@@ -26,39 +26,19 @@ public class Block extends JButton {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     public JButton getButton() {
         return button;
-    }
-
-    public void setButton(JButton button) {
-        this.button = button;
     }
 
     public ImageIcon getImage() {
         return image;
     }
 
-    public void setImage(ImageIcon image) {
-        this.image = image;
-    }
-
     public int getRow() {
         return row;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
     public int getColumn() {
         return column;
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
     }
 }

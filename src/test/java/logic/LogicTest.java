@@ -1,14 +1,11 @@
 package logic;
 
 import gui.Block;
-import gui.Board;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import sun.rmi.runtime.Log;
 
 import javax.swing.*;
-import java.lang.reflect.Member;
 
 import static org.junit.Assert.*;
 

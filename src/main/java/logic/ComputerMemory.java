@@ -60,6 +60,13 @@ public class ComputerMemory {
 
     public void add(Information info) {
 
+        for(int i = 0; i < knowledge.length; i++) {
+
+            if(knowledge[i] != null)
+                if(knowledge[i].equals(info))
+                    return;
+        }
+
         if (pointer == knowledge.length) {
             Information[] newKnowledge = new Information[knowledge.length + 1];
             for(int i = 0; i < knowledge.length; i++) {
@@ -75,7 +82,7 @@ public class ComputerMemory {
 
         for (int i = 0; i < knowledge.length; i++) {
 
-            if(knowledge[i].equals(info)) {
+            if(knowledge[i].hasSameNumber(info)) {
 
                 return knowledge[i];
             }
@@ -99,14 +106,20 @@ public class ComputerMemory {
 
     public int isTwoKnown() {
 
-        this.myQucikSort(this.getKnowledge(), 0, getKnowledge().length - 1);
+        if(this.pointer > 0) {
 
-        for(int i = 1; i < this.getKnowledge().length; i++) {
+            this.myQucikSort(this.getKnowledge(), 0, getKnowledge().length - 1);
 
-            if( this.getKnowledge()[i].equals( this.getKnowledge()[i-1]) ) {
+            for (int i = 1; i < this.getKnowledge().length; i++) {
 
-                return i;
+                if (this.getKnowledge()[i].hasSameNumber(this.getKnowledge()[i - 1])) {
+
+                    if (this.getKnowledge()[i].getNumber() != 99 )
+                        return i;
+                }
             }
+
+            return -1;
         }
 
         return -1;
@@ -114,16 +127,36 @@ public class ComputerMemory {
 
     public int isSecondKnown(Information info) {
 
-        this.myQucikSort(this.getKnowledge(), 0, getKnowledge().length -1);
+        if(this.pointer > 0) {
 
-        for(int i = 0; i < this.getKnowledge().length; i++) {
+            this.myQucikSort(this.getKnowledge(), 0, getKnowledge().length - 1);
 
-            if(this.getKnowledge()[i].equals( info )) {
+            for (int i = 0; i < this.getKnowledge().length; i++) {
 
-                return i;
+                if (this.getKnowledge()[i].hasSameNumber(info)) {
+
+                    return i;
+                }
             }
         }
 
         return -1;
+    }
+
+    public void forget() {
+
+        if (this.pointer > 0) {
+
+            this.myQucikSort(this.getKnowledge(), 0, getKnowledge().length - 1);
+
+            for (int i = 1; i < this.getKnowledge().length; i++) {
+
+                if (this.getKnowledge()[i].hasSameNumber(this.getKnowledge()[i - 1])) {
+
+                    this.getKnowledge()[i].setNumber(99);
+                    this.getKnowledge()[i-1].setNumber(99);
+                }
+            }
+        }
     }
 }

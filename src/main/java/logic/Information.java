@@ -27,6 +27,10 @@ public class Information implements Comparable<Information> {
         return number;
     }
 
+    public void setNumber(int n) {
+        this.number = n;
+    }
+
     @Override
     public int compareTo(Information info) {
 
@@ -49,7 +53,16 @@ public class Information implements Comparable<Information> {
 
         Information that = (Information) o;
 
+        if (column != that.column) return false;
+
+        if (row != that.row) return false;
+
         return number == that.number;
+    }
+
+    public boolean hasSameNumber(Information info) {
+
+        return number == info.number;
     }
 
     @Override
@@ -58,5 +71,14 @@ public class Information implements Comparable<Information> {
         result = 31 * result + column;
         result = 31 * result + number;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Information{" +
+                "row=" + row +
+                ", column=" + column +
+                ", number=" + number +
+                '}';
     }
 }

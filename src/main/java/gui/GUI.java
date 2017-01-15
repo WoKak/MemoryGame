@@ -12,7 +12,7 @@ public class GUI {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MyFrame frame = new MyFrame();
+                gui.MyFrame frame = new MyFrame();
                 frame.setTitle("memory");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setResizable(true);

@@ -1,5 +1,7 @@
 package gui;
 
+import logic.Logic;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,6 +26,17 @@ public class MyFrame extends JFrame {
 
         JMenuItem start = new JMenuItem("Start");
         game.add(start);
+
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                for(int i = 0; i < Logic.getInstance().getComputerMemory().getKnowledge().length; i++) {
+
+                    System.out.println(Logic.getInstance().getComputerMemory().getKnowledge()[i]);
+                }
+            }
+        });
 
         Board board = new Board();
         add(board);

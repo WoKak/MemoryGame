@@ -1,11 +1,12 @@
 package gui;
 
+import logic.Information;
+import logic.Logic;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import logic.Information;
-import logic.Logic;
 
 /**
  * Created by Michał on 2017-01-06.
@@ -15,6 +16,7 @@ public class Board extends JPanel {
     private static Block[][] blocks;
 
     private Block firstChosenImage;
+    private static int isNeedToMakeMove = 0;
 
     public Board() {
 
@@ -32,15 +34,16 @@ public class Board extends JPanel {
                 JButton button = new JButton();
                 button.setActionCommand("" + i + j);
                 button.addActionListener(new ActionListener() {
+
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        //    button.setEnabled(false);
+
                         String rowAndColumn = e.getActionCommand();
-                        Block currentBlock = blocks[Integer.parseInt(rowAndColumn.substring(0, 1))][Integer.parseInt(rowAndColumn.substring(1, 2))];
+                        Block currentBlock =
+                                blocks[Integer.parseInt(rowAndColumn.substring(0, 1))]
+                                        [Integer.parseInt(rowAndColumn.substring(1, 2))];
                         onClicked(currentBlock);
-                        // what happens here is that every button has hidden String field called ActionCommand;
-                        // here the ActionCommand string is set as a "ij", where i is row number and j is column number ( or the other way around XD )
-                        // with getActionCommand the String is got, then used to get clicked button's Block from blocks[][] array
+
                     }
                 });
                 button.setPreferredSize(new Dimension(100, 100));
@@ -51,8 +54,7 @@ public class Board extends JPanel {
                 ImageIcon imageToPut = new ImageIcon(srcFolder + whereToPutImages[imageIndex] + ".jpg");
 
                 blocks[i][j] = new Block(whereToPutImages[imageIndex], button, imageToPut, i, j);
-                // !!! if you want to see where all pictures are uncomment this line:
-                // button.setIcon(imageToPut);
+                //button.setIcon(imageToPut);
                 add(button);
             }
         }
@@ -61,24 +63,19 @@ public class Board extends JPanel {
     public void onClicked(Block current) {
 
         current.getButton().setIcon(current.getImage());
+        isNeedToMakeMove++;
 
-        if (this.firstChosenImage == null) {
-            this.firstChosenImage = current;
-            System.out.println("" + current.getValue());
+        if(isNeedToMakeMove%2 != 0) {
+
+            firstChosenImage = current;
+
         } else {
-            System.out.println("" + current.getValue());
-            System.out.println("PARA CZY NIE PARA?");
-            try {
-                Thread.sleep(2000); // sleep so user can see what image is on button that they clicked ( doesn't work! )
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
+
             Logic.getInstance().playerMove(firstChosenImage, current);
-            this.firstChosenImage.getButton().setIcon(null);
-            this.firstChosenImage = null;
-            current.getButton().setIcon(null);
         }
 
+        System.out.println("Player: " + Logic.getInstance().getRank()[0]
+                + ", AI: " + Logic.getInstance().getRank()[1]);
     }
 
     public static JButton[][] getBlocks() {

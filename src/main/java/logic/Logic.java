@@ -66,20 +66,28 @@ public class Logic {
 
     public void playerMove(Block firstImage, Block secondImage) {
 
-        if (firstImage.getValue() == secondImage.getValue()) {
+        if ( (firstImage.getRow() == secondImage.getRow()) && (firstImage.getColumn() == secondImage.getColumn()) ) {
 
-            firstImage.getButton().setEnabled(false);
-            secondImage.getButton().setEnabled(false);
-
-            rank[0]++;
+            computerMove();
 
         } else {
 
-            computerMemory.add(new Information(firstImage.getRow(), firstImage.getColumn(), firstImage.getValue()));
-            computerMemory.add(new Information(secondImage.getRow(), secondImage.getColumn(), secondImage.getValue()));
-        }
 
-        computerMove();
+            if (firstImage.getValue() == secondImage.getValue()) {
+
+                firstImage.getButton().setEnabled(false);
+                secondImage.getButton().setEnabled(false);
+
+                rank[0]++;
+
+            } else {
+
+                computerMemory.add(new Information(firstImage.getRow(), firstImage.getColumn(), firstImage.getValue()));
+                computerMemory.add(new Information(secondImage.getRow(), secondImage.getColumn(), secondImage.getValue()));
+            }
+
+            computerMove();
+        }
     }
 
     /**
@@ -110,6 +118,14 @@ public class Logic {
             Information firstImageFromDecision = chooseOneImage();
             Information secondImageFromDecision;
 
+            Information tmp = computerMemory.find(firstImageFromDecision);
+
+            while(tmp != null) {
+
+                firstImageFromDecision = chooseOneImage();
+                tmp = computerMemory.find(firstImageFromDecision);
+            }
+
             int indexOfSecond = computerMemory.isSecondKnown(firstImageFromDecision);
 
             if(indexOfSecond != -1) {
@@ -125,9 +141,16 @@ public class Logic {
 
                 secondImageFromDecision = chooseOneImage();
 
+                while (secondImageFromDecision.equals(firstImageFromDecision)) {
+
+                    secondImageFromDecision = chooseOneImage();
+                }
+
                 mark(firstImageFromDecision, secondImageFromDecision);
             }
         }
+
+        this.computerMemory.forget();
     }
 
     /**
@@ -137,7 +160,16 @@ public class Logic {
      * @param first Information
      * @param second Information
      */
-    public void mark(Information first, Information second) {
+    public void mark(Information first, Information second){
+
+        Block tmp1 = Board.getBlockWithInformation(first);
+        Block tmp2 = Board.getBlockWithInformation(second);
+
+        tmp1.getButton().setIcon(tmp1.getImage());
+        tmp2.getButton().setIcon(tmp2.getImage());
+
+        System.out.println("First: " + tmp1.getRow() + ", " + tmp1.getColumn() +
+                "Second: " + tmp2.getRow() + ", " + tmp2.getColumn());
 
         if(first.getNumber() != second.getNumber()) {
 
@@ -163,6 +195,17 @@ public class Logic {
 
         int tmpRow = random.nextInt(8);
         int tmpColumn = random.nextInt(8);
+
+        Block tmp = Board.getBlockWithCoordinates(tmpRow, tmpColumn);
+
+        while (!tmp.getButton().isEnabled()) {
+
+            System.out.println("Jestem w pętli");
+
+            tmpRow = random.nextInt(8);
+            tmpColumn = random.nextInt(8);
+            tmp = Board.getBlockWithCoordinates(tmpRow, tmpColumn);
+        }
 
         int value = Board.getBlockWithCoordinates(tmpRow, tmpColumn).getValue();
 
