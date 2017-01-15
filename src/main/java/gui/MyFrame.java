@@ -16,28 +16,6 @@ public class MyFrame extends JFrame {
 
         setSize(new Dimension(900, 920));
         setLocationByPlatform(true);
-
-
-        JMenuBar menuBar = new JMenuBar();
-        this.setJMenuBar(menuBar);
-
-        JMenu game = new JMenu("Gra");
-        menuBar.add(game);
-
-        JMenuItem start = new JMenuItem("Start");
-        game.add(start);
-
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                for(int i = 0; i < Logic.getInstance().getComputerMemory().getKnowledge().length; i++) {
-
-                    System.out.println(Logic.getInstance().getComputerMemory().getKnowledge()[i]);
-                }
-            }
-        });
-
         Board board = new Board();
         add(board);
     }
