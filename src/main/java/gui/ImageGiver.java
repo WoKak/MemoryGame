@@ -1,6 +1,5 @@
 package gui;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -18,7 +17,7 @@ public class ImageGiver {
 
         int buttonIndex = 0;
 
-        ArrayList<Integer> numbersAvaibleToGet = new ArrayList<>(64);
+        MyList numbersAvaibleToGet = new MyList(64);
         for (int k = 0; k < 2; k++) {
             for (int i = 0; i < 32; i++) {
                 numbersAvaibleToGet.add(i);
