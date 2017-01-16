@@ -115,7 +115,7 @@ public class LogicTest {
     public void chooseOneImage() throws Exception {
 
         Logic logic = Logic.getInstance();
-        Information tmp = logic.chooseOneImage();
+        Information tmp = logic.chooseOneImage(null);
 
         assertNotNull(tmp);
 

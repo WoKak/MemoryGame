@@ -115,16 +115,8 @@ public class Logic {
         } else {
 
             //choosing one then checking if similar is known if not choosing second
-            Information firstImageFromDecision = chooseOneImage();
+            Information firstImageFromDecision = chooseOneImage(null);
             Information secondImageFromDecision;
-
-            Information tmp = computerMemory.find(firstImageFromDecision);
-
-            while(tmp != null) {
-
-                firstImageFromDecision = chooseOneImage();
-                tmp = computerMemory.find(firstImageFromDecision);
-            }
 
             int indexOfSecond = computerMemory.isSecondKnown(firstImageFromDecision);
 
@@ -139,11 +131,11 @@ public class Logic {
 
             } else {
 
-                secondImageFromDecision = chooseOneImage();
+                secondImageFromDecision = chooseOneImage(firstImageFromDecision);
 
                 while (secondImageFromDecision.equals(firstImageFromDecision)) {
 
-                    secondImageFromDecision = chooseOneImage();
+                    secondImageFromDecision = chooseOneImage(firstImageFromDecision);
                 }
 
                 mark(firstImageFromDecision, secondImageFromDecision);
@@ -171,6 +163,9 @@ public class Logic {
         System.out.println("First: " + tmp1.getRow() + ", " + tmp1.getColumn() +
                 "Second: " + tmp2.getRow() + ", " + tmp2.getColumn());
 
+        if (first.equals(second))
+            return;
+
         if(first.getNumber() != second.getNumber()) {
 
             computerMemory.add(first);
@@ -189,22 +184,61 @@ public class Logic {
      * Method used for choosing one completely random block from board
      * @return Information for the AI
      */
-    public Information chooseOneImage() {
+    public Information chooseOneImage(Information info) {
 
         Random random = new Random();
 
         int tmpRow = random.nextInt(8);
         int tmpColumn = random.nextInt(8);
 
+        int isMethodNeedsChange = 0;
+
         Block tmp = Board.getBlockWithCoordinates(tmpRow, tmpColumn);
 
         while (!tmp.getButton().isEnabled()) {
 
-            System.out.println("Jestem w pętli");
+            if (isMethodNeedsChange < 10) {
 
-            tmpRow = random.nextInt(8);
-            tmpColumn = random.nextInt(8);
-            tmp = Board.getBlockWithCoordinates(tmpRow, tmpColumn);
+                tmpRow = random.nextInt(8);
+                tmpColumn = random.nextInt(8);
+
+                tmp = Board.getBlockWithCoordinates(tmpRow, tmpColumn);
+
+                isMethodNeedsChange++;
+
+            } else {
+
+                for (int i = 0; i < 8; i++) {
+
+                    for (int j = 0; j < 8; j++) {
+
+                        tmpRow = i;
+                        tmpColumn = j;
+
+                        tmp = Board.getBlockWithCoordinates(tmpRow, tmpColumn);
+
+                        if (tmp.getButton().isEnabled()) {
+
+                            Information toReturn;
+
+                            if (info != null) {
+
+                                int value = Board.getBlockWithCoordinates(tmpRow, tmpColumn).getValue();
+                                toReturn = new Information(tmpRow, tmpColumn, value);
+
+                                if (!toReturn.equals(info))
+                                    return toReturn;
+
+                            } else {
+
+                                int value = Board.getBlockWithCoordinates(tmpRow, tmpColumn).getValue();
+                                toReturn = new Information(tmpRow, tmpColumn, value);
+                                return toReturn;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         int value = Board.getBlockWithCoordinates(tmpRow, tmpColumn).getValue();
