@@ -86,7 +86,8 @@ public class Logic {
                 computerMemory.add(new Information(secondImage.getRow(), secondImage.getColumn(), secondImage.getValue()));
             }
 
-            computerMove();
+            if(rank[0] + rank[1] != 32)
+                computerMove();
         }
     }
 
@@ -159,9 +160,6 @@ public class Logic {
 
         tmp1.getButton().setIcon(tmp1.getImage());
         tmp2.getButton().setIcon(tmp2.getImage());
-
-        System.out.println("First: " + tmp1.getRow() + ", " + tmp1.getColumn() +
-                "Second: " + tmp2.getRow() + ", " + tmp2.getColumn());
 
         if (first.equals(second))
             return;

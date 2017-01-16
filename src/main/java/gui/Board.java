@@ -74,8 +74,23 @@ public class Board extends JPanel {
             Logic.getInstance().playerMove(firstChosenImage, current);
         }
 
-        System.out.println("Player: " + Logic.getInstance().getRank()[0]
-                + ", AI: " + Logic.getInstance().getRank()[1]);
+        if(Logic.getInstance().getRank()[0] + Logic.getInstance().getRank()[1] == 32) {
+
+            if(Logic.getInstance().getRank()[0] > Logic.getInstance().getRank()[1]) {
+
+                JOptionPane.showMessageDialog(this.getParent(),
+                        "Wygrał gracz! - " + Logic.getInstance().getRank()[0] +
+                                " - " + Logic.getInstance().getRank()[1],
+                        "Koniec gry!", 1);
+
+            } else {
+
+                JOptionPane.showMessageDialog(this.getParent(),
+                        "Wygrał komputer! - " + Logic.getInstance().getRank()[0] +
+                                " - " + Logic.getInstance().getRank()[1],
+                        "Koniec gry!", 1);
+            }
+        }
     }
 
     public static JButton[][] getBlocks() {
