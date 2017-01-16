@@ -39,7 +39,7 @@ public class MyList {
     }
 
     public void remove(int index) {
-        System.out.println("" + index);
+
         int[] tmp = new int[this.size - 1];
 
         for (int i = 0; i < index; i++) {
