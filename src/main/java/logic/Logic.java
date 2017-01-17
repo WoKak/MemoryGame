@@ -154,7 +154,7 @@ public class Logic {
         if(first.getNumber() != second.getNumber()) {
 
             computerMemory.add(first);
-            computerMemory.add(second);
+            //computerMemory.add(second); Commented in order to increase player's chances
 
         } else {
 
