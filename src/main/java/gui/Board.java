@@ -71,7 +71,8 @@ public class Board extends JPanel {
 
         } else {
 
-            Logic.getInstance().playerMove(firstChosenImage, current);
+            current.getButton().setIcon(current.getImage());
+            Logic.getInstance().makeMove(firstChosenImage, current);
         }
 
         if(Logic.getInstance().getRank()[0] + Logic.getInstance().getRank()[1] == 32) {

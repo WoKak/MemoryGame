@@ -68,7 +68,7 @@ public class Logic {
 
         if ( (firstImage.getRow() == secondImage.getRow()) && (firstImage.getColumn() == secondImage.getColumn()) ) {
 
-            computerMove();
+            return;
 
         } else {
 
@@ -80,14 +80,7 @@ public class Logic {
 
                 rank[0]++;
 
-            } else {
-
-                computerMemory.add(new Information(firstImage.getRow(), firstImage.getColumn(), firstImage.getValue()));
-                computerMemory.add(new Information(secondImage.getRow(), secondImage.getColumn(), secondImage.getValue()));
             }
-
-            if(rank[0] + rank[1] != 32)
-                computerMove();
         }
     }
 
@@ -154,12 +147,6 @@ public class Logic {
      * @param second Information
      */
     public void mark(Information first, Information second){
-
-        Block tmp1 = Board.getBlockWithInformation(first);
-        Block tmp2 = Board.getBlockWithInformation(second);
-
-        tmp1.getButton().setIcon(tmp1.getImage());
-        tmp2.getButton().setIcon(tmp2.getImage());
 
         if (first.equals(second))
             return;
@@ -242,5 +229,86 @@ public class Logic {
         int value = Board.getBlockWithCoordinates(tmpRow, tmpColumn).getValue();
 
         return new Information(tmpRow, tmpColumn, value);
+    }
+
+    public void makeMove(Block first, Block second) {
+
+        Runnable pm = new Runnable() {
+            @Override
+            public void run() {
+                playerMove(first, second);
+            }
+        };
+
+        Runnable cm = new Runnable() {
+            @Override
+            public void run() {
+                computerMove();
+            }
+        };
+
+        Runnable display = new Runnable() {
+            @Override
+            public void run() {
+                first.getButton().setIcon(first.getImage());
+                second.getButton().setIcon(second.getImage());
+            }
+        };
+
+        Runnable stopDisplay = new Runnable() {
+            @Override
+            public void run() {
+                first.getButton().setIcon(null);
+                second.getButton().setIcon(null);
+            }
+        };
+
+        final Thread pmt = new Thread(pm);
+        final Thread cmt = new Thread(cm);
+        final Thread dt = new Thread(display);
+        final Thread sdt = new Thread(stopDisplay);
+
+        try {
+
+            pmt.setDaemon(true);
+            pmt.start();
+
+            pmt.interrupt();
+            pmt.join();
+
+            if(!pmt.isAlive()) {
+
+                dt.setDaemon(true);
+                dt.start();
+
+                dt.interrupt();
+                dt.join();
+
+                if(!dt.isAlive()) {
+
+                    sdt.setDaemon(true);
+                    sdt.start();
+
+                    sdt.interrupt();
+                    sdt.join(2000);
+
+                    if (!sdt.isAlive() && (rank[0] + rank[1] != 32)) {
+
+                        cmt.setDaemon(true);
+                        cmt.start();
+
+                        cmt.interrupt();
+                        cmt.join();
+                    }
+                }
+
+            }
+
+            if (!cmt.isAlive())
+                return;
+
+        } catch (Exception ex) {
+
+        }
     }
 }
