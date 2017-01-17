@@ -16,11 +16,12 @@ public class Logic {
 
     private Logic() {
         computerMemory = new ComputerMemory();
-        rank = new int[] {0, 0};
+        rank = new int[]{0, 0};
     }
 
     /**
      * Method introduced because Logic is singleton.
+     *
      * @return Logic instance
      */
     public static synchronized Logic getInstance() {
@@ -39,7 +40,7 @@ public class Logic {
      */
     public static synchronized void destroyLogic() {
 
-        if(INSTANCE != null) {
+        if (INSTANCE != null) {
 
             INSTANCE.setComputerMemory(null);
             INSTANCE.setRank(null);
@@ -66,7 +67,7 @@ public class Logic {
 
     public void playerMove(Block firstImage, Block secondImage) {
 
-        if ( (firstImage.getRow() == secondImage.getRow()) && (firstImage.getColumn() == secondImage.getColumn()) ) {
+        if ((firstImage.getRow() == secondImage.getRow()) && (firstImage.getColumn() == secondImage.getColumn())) {
 
             return;
 
@@ -114,7 +115,7 @@ public class Logic {
 
             int indexOfSecond = computerMemory.isSecondKnown(firstImageFromDecision);
 
-            if(indexOfSecond != -1) {
+            if (indexOfSecond != -1) {
 
                 secondImageFromDecision = new Information(
                         computerMemory.find(indexOfSecond).getRow(),
@@ -143,18 +144,19 @@ public class Logic {
      * Method used as a part of AI for checking and deciding whether params are similar or not.
      * In first case rank is increased and proper blocks are enabled.
      * If not AI adds both information to the memory.
-     * @param first Information
+     *
+     * @param first  Information
      * @param second Information
      */
-    public void mark(Information first, Information second){
+    public void mark(Information first, Information second) {
 
         if (first.equals(second))
             return;
 
-        if(first.getNumber() != second.getNumber()) {
+        if (first.getNumber() != second.getNumber()) {
 
             computerMemory.add(first);
-            //computerMemory.add(second); Commented in order to increase player's chances
+            //computerMemory.add(second); Commented in order to increase difficulty level
 
         } else {
 
@@ -169,6 +171,7 @@ public class Logic {
 
     /**
      * Method used for choosing one completely random block from board
+     *
      * @return Information for the AI
      */
     public Information chooseOneImage(Information info) {
@@ -249,14 +252,6 @@ public class Logic {
             }
         };
 
-        Runnable display = new Runnable() {
-            @Override
-            public void run() {
-                first.getButton().setIcon(first.getImage());
-                second.getButton().setIcon(second.getImage());
-            }
-        };
-
         Runnable stopDisplay = new Runnable() {
             @Override
             public void run() {
@@ -267,7 +262,6 @@ public class Logic {
 
         final Thread pmt = new Thread(pm);
         final Thread cmt = new Thread(cm);
-        final Thread dt = new Thread(display);
         final Thread sdt = new Thread(stopDisplay);
 
         try {
@@ -278,33 +272,25 @@ public class Logic {
             pmt.interrupt();
             pmt.join();
 
-            if(!pmt.isAlive()) {
+            if (!pmt.isAlive()) {
 
-                dt.setDaemon(true);
-                dt.start();
 
-                dt.interrupt();
-                dt.join();
+                sdt.setDaemon(true);
+                sdt.start();
 
-                if(!dt.isAlive()) {
+                sdt.interrupt();
+                sdt.join();
 
-                    sdt.setDaemon(true);
-                    sdt.start();
+                if (!sdt.isAlive() && (rank[0] + rank[1] != 32)) {
 
-                    sdt.interrupt();
-                    sdt.join();
+                    cmt.setDaemon(true);
+                    cmt.start();
 
-                    if (!sdt.isAlive() && (rank[0] + rank[1] != 32)) {
-
-                        cmt.setDaemon(true);
-                        cmt.start();
-
-                        cmt.interrupt();
-                        cmt.join();
-                    }
+                    cmt.interrupt();
+                    cmt.join();
                 }
-
             }
+
 
             if (!cmt.isAlive())
                 return;

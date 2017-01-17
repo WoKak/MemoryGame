@@ -71,7 +71,6 @@ public class Board extends JPanel {
 
         } else {
 
-            current.getButton().setIcon(current.getImage());
             Logic.getInstance().makeMove(firstChosenImage, current);
         }
 
