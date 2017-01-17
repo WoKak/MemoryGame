@@ -161,6 +161,8 @@ public class Logic {
             rank[1]++;
             Board.getBlockWithInformation(first).getButton().setEnabled(false);
             Board.getBlockWithInformation(second).getButton().setEnabled(false);
+            Board.getBlockWithInformation(first).getButton().setIcon(Board.getBlockWithInformation(first).getImage());
+            Board.getBlockWithInformation(second).getButton().setIcon(Board.getBlockWithInformation(second).getImage());
         }
 
     }
@@ -290,7 +292,7 @@ public class Logic {
                     sdt.start();
 
                     sdt.interrupt();
-                    sdt.join(2000);
+                    sdt.join();
 
                     if (!sdt.isAlive() && (rank[0] + rank[1] != 32)) {
 
